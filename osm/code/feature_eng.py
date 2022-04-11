@@ -23,22 +23,34 @@ def get_counts_competition(restaurant, items_):
 def get_counts_accessibility(restaurant, items_):
     return np.count_nonzero(distance(restaurant, items_) <=406)
 def get_counts_tourism(restaurant, items_):
-    return np.count_nonzero(distance(restaurant,items_) <= 813)
+    return np.count_nonzero(distance(restaurant,items_) <= 2000)
+def get_counts_unattractive(restaurant, items_):
+    return np.count_nonzero(distance(restaurant,items_) <= 406)
 
 
 
 
-amenities_data= pd.read_json('/osm/amenities-vancouver.json.gz',
-                             compression='gzip', lines=True)
+
+amenities_data= pd.read_json('/Users/hazemelmegharbel/PycharmProjects/cmpt353-osm/osm/amenities-vancouver.json.gz',compression='gzip', lines=True)
 
 
 restaurant_data = amenities_data[amenities_data['amenity']=='restaurant']
 
 accessibility_data=amenities_data[(amenities_data['amenity']=='car_sharing') | (amenities_data['amenity']=='ferry_terminal')
-| (amenities_data['amenity']=='bus_station') | (amenities_data['amenities']=='bicycle_rental') | (amenities_data['amenity']=='parking')
+| (amenities_data['amenity']=='bus_station') | (amenities_data['amenity']=='bicycle_rental') | (amenities_data['amenity']=='parking')
 | (amenities_data['amenity']=='parking_space') | (amenities_data['amenity']=='parking_entrance') | (amenities_data['amenity']=='charging_station')]
+
+tourism_data=pd.read_csv('/Users/hazemelmegharbel/PycharmProjects/cmpt353-osm/osm/attractions.csv')
+#compiled this data from https://www.tripadvisor.ca/Attractions-g154943-Activities-oa30-Vancouver_British_Columbia.html
+tourism_data=tourism_data[['lat', 'lon']]
+
+unattractive_data= amenities_data[(amenities_data['amenity']=='waste_transfer') | (amenities_data['amenity']=='scrapyard') | (amenities_data['amenity']=='sanitary_dump_station') |
+                                  (amenities_data['amenity']=='construction') | (amenities_data['amenity']=='waste_disposal')]
 
 restaurant_data['competitors']=restaurant_data[['lat','lon']].apply(get_counts_competition, items_= restaurant_data, axis=1)
 restaurant_data['accessibility']=restaurant_data[['lat','lon']].apply(get_counts_accessibility, items_=accessibility_data, axis=1)
+restaurant_data['touristic attractions']=restaurant_data[['lat','lon']].apply(get_counts_tourism, items_= tourism_data, axis=1)
+restaurant_data['unattractiveness']=restaurant_data[['lat', 'lon']].apply(get_counts_unattractive, items_=unattractive_data, axis=1)
 
-print(amenities_data['tags'].iloc[0])
+
+restaurant_data.to_csv('restaurant_data.csv')
