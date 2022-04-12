@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import requests
 
 def distance(restaurant,items):
     r = 6371
@@ -19,13 +20,13 @@ def distance(restaurant,items):
     return (final * (10 ** 3))
 
 def get_counts_competition(restaurant, items_):
-    return np.count_nonzero((distance(restaurant, items_) <=406) & (distance(restaurant, items_) > 0))
+    return np.count_nonzero((distance(restaurant, items_) <=402) & (distance(restaurant, items_) > 0))
 def get_counts_accessibility(restaurant, items_):
-    return np.count_nonzero(distance(restaurant, items_) <=406)
+    return np.count_nonzero(distance(restaurant, items_) <=402)
 def get_counts_tourism(restaurant, items_):
-    return np.count_nonzero(distance(restaurant,items_) <= 2000)
+    return np.count_nonzero(distance(restaurant,items_) <= 2011.68)
 def get_counts_unattractive(restaurant, items_):
-    return np.count_nonzero(distance(restaurant,items_) <= 406)
+    return np.count_nonzero(distance(restaurant,items_) <= 402)
 
 
 
@@ -51,6 +52,7 @@ restaurant_data['competitors']=restaurant_data[['lat','lon']].apply(get_counts_c
 restaurant_data['accessibility']=restaurant_data[['lat','lon']].apply(get_counts_accessibility, items_=accessibility_data, axis=1)
 restaurant_data['touristic attractions']=restaurant_data[['lat','lon']].apply(get_counts_tourism, items_= tourism_data, axis=1)
 restaurant_data['unattractiveness']=restaurant_data[['lat', 'lon']].apply(get_counts_unattractive, items_=unattractive_data, axis=1)
+
 
 
 restaurant_data.to_csv('restaurant_data.csv')
