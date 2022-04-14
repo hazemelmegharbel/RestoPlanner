@@ -36,6 +36,7 @@ amenities_data= pd.read_json('/Users/hazemelmegharbel/PycharmProjects/cmpt353-os
 
 
 restaurant_data = amenities_data[amenities_data['amenity']=='restaurant']
+computer_model_data=pd.read_json('dataset_tripadvisor.json',orient='records')
 
 accessibility_data=amenities_data[(amenities_data['amenity']=='car_sharing') | (amenities_data['amenity']=='ferry_terminal')
 | (amenities_data['amenity']=='bus_station') | (amenities_data['amenity']=='bicycle_rental') | (amenities_data['amenity']=='parking')
@@ -53,6 +54,12 @@ restaurant_data['accessibility']=restaurant_data[['lat','lon']].apply(get_counts
 restaurant_data['touristic attractions']=restaurant_data[['lat','lon']].apply(get_counts_tourism, items_= tourism_data, axis=1)
 restaurant_data['unattractiveness']=restaurant_data[['lat', 'lon']].apply(get_counts_unattractive, items_=unattractive_data, axis=1)
 
-
+computer_model_data['lat']=computer_model_data['latitude']
+computer_model_data['lon']=computer_model_data['longitude']
+computer_model_data['competitors']=computer_model_data[['lat','lon']].apply(get_counts_competition, items_=computer_model_data, axis=1)
+computer_model_data['accessibility']=computer_model_data[['lat','lon']].apply(get_counts_accessibility, items_=restaurant_data, axis=1)
+computer_model_data['touristic attractions']=computer_model_data[['lat','lon']].apply(get_counts_tourism, items_=tourism_data, axis=1)
+computer_model_data['unattractiveness']=computer_model_data[['lat','lon']].apply(get_counts_unattractive, items_=restaurant_data,axis=1)
 
 restaurant_data.to_csv('restaurant_data.csv')
+computer_model_data.to_csv('computer_model_data.csv')
