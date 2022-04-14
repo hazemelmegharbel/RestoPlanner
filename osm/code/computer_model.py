@@ -18,7 +18,7 @@ regressor.fit(D,y)
 
 
 clustering_data=computer_data[['lat','lon','competitors','accessibility','touristic attractions','unattractiveness','rating']]
-cluster_pipe=KMeans(n_clusters=3)
+cluster_pipe=KMeans(n_clusters=2)
 cluster_pipe.fit(clustering_data)
 cluster_labels= cluster_pipe.predict(X=clustering_data)
 print(silhouette_score(X=clustering_data, labels=cluster_labels, metric='euclidean'))

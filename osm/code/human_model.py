@@ -11,7 +11,10 @@ def get_score(row):
     return 8*row['touristic attractions'] +0.5*row['competitors'] - 1*row['unattractiveness'] + 5*row['accessibility']
 
 restaurant_data['score']=restaurant_data.apply(lambda row: get_score(row), axis=1)
-restaurant_data['normalized']=restaurant_data['score']/np.sum(restaurant_data['score'])
+minimum=np.min(restaurant_data['score'])
+maximum=np.max(restaurant_data['score'])
+delta=maximum-minimum
+restaurant_data['score']=((restaurant_data['score']-minimum)/delta)*5
 restaurant_data=restaurant_data.drop(['Unnamed: 0','amenity','name','tags','timestamp'], axis=1)
 
 cluster_pipe=KMeans(n_clusters=2)
