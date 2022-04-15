@@ -54,7 +54,8 @@ def find_similar(amenity):
     print("\nGenerating list of similar amenities...")
 
     df = pd.read_csv('generate_datasets/amenity_densities.csv')
-    amlist=df.index.values.tolist()
+    dft=df.T
+    amlist=dft.index.values.tolist()
     if amenity not in amlist:
        print("This amenity does not have enough quantity to have correlate with others.")
        return
