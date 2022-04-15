@@ -54,7 +54,9 @@ print("feature importances: ",regressor.feature_importances_)
 print("cluster score: ",silhouette_score(X=clustering_data, labels=cluster_labels, metric='euclidean'))
 print('model score: ', regressor.score(X_test,y_test))
 print('cluster centroids: ', cluster_pipe.cluster_centers_)
-plt.show()
+plt.savefig('clusters_computer_model.png')
 
+#user_input=[] #input the features to predict
+#print(regressor.predict(user_input))
 
 

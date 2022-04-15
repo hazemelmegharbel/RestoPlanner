@@ -28,7 +28,7 @@ components=pca.fit_transform(restaurant_data)
 plt.scatter(components[:,0],components[:,1],c=cluster_labels)
 print("clusters score",silhouette_score(X=restaurant_data, labels=cluster_labels, metric='euclidean'))
 print("cluster centers: ", cluster_pipe.cluster_centers_)
-plt.show()
+plt.savefig('clusters_human_model.png')
 
 
 
