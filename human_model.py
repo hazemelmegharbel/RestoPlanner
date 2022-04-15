@@ -6,7 +6,6 @@ from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
 from sklearn.metrics import silhouette_score
-from sklearn import linear_model
 restaurant_data=pd.read_csv('generate_datasets/restaurant_data.csv')
 
 def get_score(row):
@@ -23,12 +22,12 @@ cluster_pipe=KMeans(n_clusters=2)
 cluster_pipe.fit(restaurant_data)
 cluster_labels= cluster_pipe.predict(X=restaurant_data)
 print(silhouette_score(X=restaurant_data, labels=cluster_labels, metric='euclidean'))
-pca=PCA(n_components=2)
+pca=PCA(n_components=3)
 components=pca.fit_transform(restaurant_data)
 plt.scatter(components[:,0],components[:,1],c=cluster_labels)
 print("clusters score",silhouette_score(X=restaurant_data, labels=cluster_labels, metric='euclidean'))
 print("cluster centers: ", cluster_pipe.cluster_centers_)
-plt.show()
+plt.savefig('clusters_human_model.png')
 
 
 

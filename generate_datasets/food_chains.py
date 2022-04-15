@@ -1,10 +1,10 @@
 # Ouput wikidata containing social media followers for chain food places
+# Reference: https://ramiro.org/notebook/us-presidents-causes-of-death/
 
 import pandas as pd
 import requests
 
 def wiki_foodchains():
-    # https://ramiro.org/notebook/us-presidents-causes-of-death/
     query = '''PREFIX wikibase: <http://wikiba.se/ontology#>
     PREFIX wd: <http://www.wikidata.org/entity/>
     PREFIX wdt: <http://www.wikidata.org/prop/direct/>
