@@ -1,3 +1,5 @@
+# Human-generated model for calculating restaurant ratings
+
 import pandas as pd
 import numpy as np
 from sklearn.cluster import KMeans
@@ -5,7 +7,7 @@ import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
 from sklearn.metrics import silhouette_score
 from sklearn import linear_model
-restaurant_data=pd.read_csv('restaurant_data.csv')
+restaurant_data=pd.read_csv('generate_datasets/restaurant_data.csv')
 
 def get_score(row):
     return 8*row['touristic attractions'] +0.5*row['competitors'] - 1*row['unattractiveness'] + 5*row['accessibility']

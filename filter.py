@@ -1,3 +1,6 @@
+# Helper functions for amenity selection and feedback
+
+import pandas as pd
 
 def get_input(choice, df):
    #First method: enter one or more amenities
@@ -17,7 +20,7 @@ def get_input(choice, df):
        aml3=am3.lower()
        result = (df[df.amenity.str.contains(aml3)])
     elif choice=="4":
-       result = (df[df.amenity])
+       result = df
     else: 
        choice=input("Please enter a number from the given choices {1, 2, 3}: ")
        result = get_input(choice, df)
@@ -40,27 +43,28 @@ def search_amenities(df):
       print(result)
 
 def select_amenity(df):
-    am=input("Please enter one amenity/business that you would like to open: ").lower()
-    amlist=df.index.values.tolist()
+    am=input("\nPlease enter one amenity/business that you would like to open: ").lower()
+    amlist=df.amenity.tolist()
     if am not in amlist:
        print("Sorry, you have entered an invalid name.")
-       return
+       return 0
     return am
 
-def find_similar():
-   am=input("Please enter one amenity/business that you would like to open: ")
-    aml=am.lower()
-    #Make sure the user's input is in the data
-    amlist=df1.index.values.tolist()
-    if aml not in amlist:
-       print("Sorry, I do not understand your input or this amenity does not have enough quantity to have correlation coefficient. Please try again.")
-       return 0
+def find_similar(amenity):
+    print("\nGenerating list of similar amenities...")
+
+    df = pd.read_csv('generate_datasets/amenity_densities.csv')
+    amlist=df.index.values.tolist()
+    if amenity not in amlist:
+       print("This amenity does not have enough quantity to have correlate with others.")
+       return
+
     #Find out the coresponding zones of the chosen amenity
-    dfts=dft[dft[aml].isnull()==False]
-    dflist=dfts.index.values.tolist()
+    dfts=df[df[amenity].isnull()==False]
+  
     #Find out the zones not coresponding to the chosen amenity
-    ndft=dft[~dft[aml].isnull()==False]
-    ndflist=ndft.index.values.tolist()
+    ndft=df[~df[amenity].isnull()==False]
+
     #Filter the all the amenities which also coresponding to the zones
     dff=dfts.T
     dff=dff.dropna()
@@ -71,6 +75,6 @@ def find_similar():
     ffdff=pd.merge(dff, ndff, on="amenity",how="inner")
     flist=ffdff.index.values.tolist()
     #Output
-    print("Here is the list of correlation coefficient of",am,":",flist)
+    print("Consider opening one of these businesses similar to ",amenity,": ",flist)
       
 
