@@ -24,7 +24,7 @@ def get_input(choice, df):
     else: 
        choice=input("Please enter a number from the given choices {1, 2, 3}: ")
        result = get_input(choice, df)
-    return result.amenity.drop_duplicates().tolist()
+    return sorted(result.amenity.drop_duplicates().tolist())
 
 
 def search_amenities(df):

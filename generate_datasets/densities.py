@@ -68,10 +68,8 @@ def amenity_densities(df):
     df1 = pd.merge(df1, df17, on="amenity",how="outer")
     df1 = pd.merge(df1, df19, on="amenity",how="outer")
     df1=df1
-    #transfer the column into row and row to column
-    #https://www.geeksforgeeks.org/pandas-dataframe-t-function-in-python/
-    dft=df1.T
-    dft.to_csv('amenity_densities.csv')
+
+    df1.to_csv('amenity_densities.csv')
 
 
 
