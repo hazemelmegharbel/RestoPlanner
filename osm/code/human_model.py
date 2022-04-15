@@ -17,7 +17,7 @@ delta=maximum-minimum
 restaurant_data['score']=((restaurant_data['score']-minimum)/delta)*5
 restaurant_data=restaurant_data.drop(['Unnamed: 0','amenity','name','tags','timestamp'], axis=1)
 
-cluster_pipe=KMeans(n_clusters=2)
+cluster_pipe=KMeans(n_clusters=3)
 cluster_pipe.fit(restaurant_data)
 cluster_labels= cluster_pipe.predict(X=restaurant_data)
 print(silhouette_score(X=restaurant_data, labels=cluster_labels, metric='euclidean'))

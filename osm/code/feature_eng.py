@@ -1,3 +1,5 @@
+import ast
+
 import pandas as pd
 import numpy as np
 import requests
@@ -60,6 +62,5 @@ computer_model_data['competitors']=computer_model_data[['lat','lon']].apply(get_
 computer_model_data['accessibility']=computer_model_data[['lat','lon']].apply(get_counts_accessibility, items_=restaurant_data, axis=1)
 computer_model_data['touristic attractions']=computer_model_data[['lat','lon']].apply(get_counts_tourism, items_=tourism_data, axis=1)
 computer_model_data['unattractiveness']=computer_model_data[['lat','lon']].apply(get_counts_unattractive, items_=restaurant_data,axis=1)
-
 restaurant_data.to_csv('restaurant_data.csv')
 computer_model_data.to_csv('computer_model_data.csv')
