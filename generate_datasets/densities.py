@@ -1,10 +1,8 @@
-import sys
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
+# Output dataset containing density of all amenities in partitioned areas of Vancouver
 
-def main(in_d):
-    df = pd.read_json(in_d, lines=True)
+import pandas as pd
+
+def amenity_densities(df):
     
     #Seperate the map into 20 areas and count the number of each amenities
     #https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.rename_axis.html
@@ -70,38 +68,8 @@ def main(in_d):
     df1 = pd.merge(df1, df17, on="amenity",how="outer")
     df1 = pd.merge(df1, df19, on="amenity",how="outer")
     df1=df1
-    #transfer the column into row and row to column
-    #https://www.geeksforgeeks.org/pandas-dataframe-t-function-in-python/
-    dft=df1.T
-    #user's input
-    am=input("input:")
-    aml=am.lower()
-    #Make sure the user's input is in the data
-    amlist=df1.index.values.tolist()
-    if aml not in amlist:
-       print("Sorry I do not understand or this amenity does not have enough quantity to have correlation coefficient. Please try again.")
-       return 0
-    #Find out the coresponding zones of the chosen amenity
-    dfts=dft[dft[aml].isnull()==False]
-    dflist=dfts.index.values.tolist()
-    #Find out the zones not coresponding to the chosen amenity
-    ndft=dft[~dft[aml].isnull()==False]
-    ndflist=ndft.index.values.tolist()
-    #Filter the all the amenities which also coresponding to the zones
-    dff=dfts.T
-    dff=dff.dropna()
-    #Filter the all the amenities which also not coresponding to the zones
-    ndff=ndft.T
-    ndff=ndff[ndff.isnull().all(1)==True]
-    #Find out other amenities also coresponding to the same zones and not coresponding to the same zones
-    ffdff=pd.merge(dff, ndff, on="amenity",how="inner")
-    flist=ffdff.index.values.tolist()
-    #Output
-    print("Here is the list of correlation coefficient of",am,":",flist)
-    
-    
-if __name__ == '__main__':
-    in_d = sys.argv[1]
-    main(in_d)
+
+    df1.to_csv('amenity_densities.csv')
+
 
 

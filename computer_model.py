@@ -1,15 +1,13 @@
+# Computer linear-regression model trained on tripadvisor ratings data
+
 import pandas as pd
-import numpy as np
 from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
 from sklearn.metrics import silhouette_score
 from sklearn import linear_model
-tripadvisor_df = pd.read_csv('computer_model_data.csv')
-computer_data=tripadvisor_df.drop(['Unnamed: 0', 'id', 'type', 'name', 'awards', 'priceLevel', 'category', 'phone','address',
-                                   'email', 'cuisine', 'mealTypes', 'hours', 'latitude', 'longitude', 'webUrl',
-                                   'website', 'rankingString', 'reviews', 'isClosed', 'isLongClosed'], axis=1)
-computer_data.dropna(subset=['rating', 'lat', 'lon', 'rankingPosition', 'rankingDenominator'], inplace=True)
+
+computer_data = pd.read_csv('generate_datasets/computer_model_data.csv')
 
 D=computer_data[['lat','lon','rankingPosition','rankingDenominator','competitors','accessibility','touristic attractions','unattractiveness']]
 y=computer_data[['rating']]
