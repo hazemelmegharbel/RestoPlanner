@@ -54,17 +54,18 @@ def find_similar(amenity):
     print("\nGenerating list of similar amenities...")
 
     df = pd.read_csv('generate_datasets/amenity_densities.csv')
+    df=df.set_index('amenity')
     dft=df.T
-    amlist=dft.index.values.tolist()
+    amlist=df.index.values.tolist()
     if amenity not in amlist:
        print("This amenity does not have enough quantity to have correlate with others.")
        return
 
     #Find out the coresponding zones of the chosen amenity
-    dfts=df[df[amenity].isnull()==False]
+    dfts=dft[dft[amenity].isnull()==False]
   
     #Find out the zones not coresponding to the chosen amenity
-    ndft=df[~df[amenity].isnull()==False]
+    ndft=dft[~dft[amenity].isnull()==False]
 
     #Filter the all the amenities which also coresponding to the zones
     dff=dfts.T
