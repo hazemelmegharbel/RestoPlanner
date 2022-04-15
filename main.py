@@ -1,4 +1,4 @@
-# Main driver for program
+# Main driver for program that interacts with user 
 
 import pandas as pd 
 from filter import *
