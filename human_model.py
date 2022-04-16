@@ -6,7 +6,6 @@ from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
 from sklearn.metrics import silhouette_score
-from sklearn import linear_model
 restaurant_data=pd.read_csv('generate_datasets/restaurant_data.csv')
 
 def get_score(row):

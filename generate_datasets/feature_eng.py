@@ -50,8 +50,6 @@ def ml_data(amenities_data):
     restaurant_data['touristic attractions']=restaurant_data[['lat','lon']].apply(get_counts_tourism, items_= tourism_data, axis=1)
     restaurant_data['unattractiveness']=restaurant_data[['lat', 'lon']].apply(get_counts_unattractive, items_=unattractive_data, axis=1)
 
-    computer_model_data['lat']=computer_model_data['latitude']
-    computer_model_data['lon']=computer_model_data['longitude']
     computer_model_data['competitors']=computer_model_data[['lat','lon']].apply(get_counts_competition, items_=restaurant_data, axis=1)
     computer_model_data['accessibility']=computer_model_data[['lat','lon']].apply(get_counts_accessibility, items_=restaurant_data, axis=1)
     computer_model_data['touristic attractions']=computer_model_data[['lat','lon']].apply(get_counts_tourism, items_=tourism_data, axis=1)
